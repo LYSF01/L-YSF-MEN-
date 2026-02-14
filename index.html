@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>L'YSF Exclusive Menu</title>
+    <title>L'YSF Exclusive Experience</title>
     
     <!-- Lüks Fontlar -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
@@ -13,15 +13,16 @@
     <style>
         :root {
             --gold: #d4af37;
-            --gold-glow: rgba(212, 175, 55, 0.6);
+            --gold-glow: rgba(212, 175, 55, 0.4);
             --dark-bg: #0a0a0a;
-            --glass: rgba(20, 20, 20, 0.95);
+            --fume-mirror: rgba(30, 30, 30, 0.85);
+            --glass: rgba(255, 255, 255, 0.03);
             --text-white: #f5f5f5;
         }
 
         body {
             background-color: var(--dark-bg);
-            background-image: radial-gradient(circle at center, #2a2a2a, #000);
+            background-image: radial-gradient(circle at center, #1a1a1a, #000);
             color: var(--text-white);
             font-family: 'Montserrat', sans-serif;
             margin: 0;
@@ -34,340 +35,353 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- ÜST BAR (HEADER) --- */
-        header {
-            padding: 25px 10px;
-            text-align: center;
-            background: linear-gradient(180deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0) 100%);
-            z-index: 10;
-            position: relative;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
-            flex-shrink: 0;
+        /* --- VIP GİRİŞ EKRANI --- */
+        #welcomeScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--dark-bg);
+            z-index: 1000;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            padding: 40px; box-sizing: border-box;
+            transition: opacity 1s ease;
         }
 
-        h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
+        .dna-box {
+            text-align: center;
+            max-width: 400px; width: 100%;
+        }
+
+        .dna-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--gold);
             color: var(--gold);
-            margin: 0;
-            letter-spacing: 5px;
-            text-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
-            text-transform: uppercase;
-        }
-
-        .subtitle {
-            font-size: 0.9rem;
-            letter-spacing: 8px;
-            color: #888;
-            margin-top: 8px;
-            text-transform: uppercase;
-        }
-
-        /* --- MENÜ IZGARASI (TAM ORTALI & KAPLAYAN) --- */
-        .menu-container {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            overflow-y: auto;
-            padding: 20px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-        }
-
-        .menu-grid {
-            width: 100%;
-            max-width: 1200px;
-            padding-bottom: 140px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 20px;
-            align-content: start;
-        }
-
-        /* --- ÜRÜN KARTI --- */
-        .card {
-            position: relative;
-            aspect-ratio: 4 / 5; 
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 1px solid #333;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: #151515;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-            opacity: 0;
-            animation: fadeUp 0.6s forwards;
-            display: flex;
-            flex-direction: column;
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Resim Alanı */
-        .card-img-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-            filter: brightness(0.7);
-        }
-
-        /* Yedek Görünüm (İkon) */
-        .fallback-view {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 4.5rem;
-            background: linear-gradient(135deg, #222, #111);
-            color: rgba(255,255,255,0.15);
-        }
-
-        /* Yazı Alanı */
-        .card-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 30%, transparent 100%);
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-
-        .card h3 {
-            margin: 0;
             font-family: 'Cinzel', serif;
             font-size: 1.2rem;
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0,0,0,1);
-            position: relative;
-            z-index: 3;
+            text-align: center;
+            padding: 10px;
             width: 100%;
-        }
-        
-        /* --- SEÇİLİ DURUM (AKTİF) --- */
-        .card.active {
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 30px var(--gold-glow);
+            outline: none;
+            margin-bottom: 30px;
         }
 
-        .card.active .card-img {
-            transform: scale(1.1);
-            filter: brightness(1.1);
-        }
-
-        .card.active .card-overlay {
-            background: linear-gradient(to top, rgba(212, 175, 55, 0.25), transparent);
-        }
-
-        /* Tik İkonu */
-        .check-icon {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--gold);
-            color: #000;
-            width: 32px;
-            height: 32px;
+        /* Parmak İzi Tarayıcı */
+        .fingerprint-scanner {
+            width: 120px; height: 120px;
+            border: 2px solid rgba(212, 175, 55, 0.2);
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 18px;
-            transform: scale(0);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 5;
-            box-shadow: 0 0 15px var(--gold);
-        }
-
-        .card.active .check-icon {
-            transform: scale(1);
-        }
-
-        /* --- ALT BUTON --- */
-        .footer-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 25px;
-            background: linear-gradient(to top, #000 70%, transparent);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            z-index: 20;
-            box-sizing: border-box;
-        }
-
-        .action-btn {
-            background: linear-gradient(45deg, #b88a44, #f3e5ab, #b88a44);
-            background-size: 200% auto;
-            color: #000;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 20px 60px;
-            border-radius: 60px;
-            border: none;
-            font-size: 1.1rem;
-            box-shadow: 0 10px 40px rgba(184, 138, 68, 0.5);
+            margin: 30px auto;
+            position: relative;
             cursor: pointer;
-            pointer-events: auto;
-            transform: translateY(150px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            white-space: nowrap;
-            animation: shine 3s infinite linear;
+            display: flex; justify-content: center; align-items: center;
+            overflow: hidden;
         }
 
-        @keyframes shine {
-            to { background-position: 200% center; }
+        .fingerprint-icon {
+            font-size: 3rem; color: var(--gold); opacity: 0.5;
+            transition: 0.3s;
         }
 
-        .action-btn.visible {
-            transform: translateY(0);
-            opacity: 1;
+        .scan-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: var(--gold);
+            box-shadow: 0 0 15px var(--gold);
+            display: none;
+            animation: scanMove 2s infinite ease-in-out;
         }
+
+        @keyframes scanMove {
+            0% { top: 10%; }
+            50% { top: 90%; }
+            100% { top: 10%; }
+        }
+
+        .scanner-active .scan-line { display: block; }
+        .scanner-active .fingerprint-icon { opacity: 1; transform: scale(1.1); }
+
+        /* --- ANA EKRAN DÜZENİ --- */
+        header {
+            padding: 25px 20px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+            z-index: 10;
+        }
+
+        h1 { font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--gold); margin: 0; letter-spacing: 6px; text-transform: uppercase; }
+        .subtitle { font-size: 0.75rem; letter-spacing: 10px; color: #777; margin-top: 8px; text-transform: uppercase; }
+
+        .service-nav { display: flex; justify-content: center; gap: 20px; margin-top: 15px; }
+        .nav-link { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 2px; color: #555; padding: 5px 15px; border-radius: 20px; cursor: pointer; }
+        .nav-link.active { color: var(--gold); border: 1px solid rgba(212, 175, 55, 0.2); background: rgba(212, 175, 55, 0.05); }
+
+        /* Kişiselleştirilmiş Karşılama Şeridi */
+        #personalAura {
+            display: none;
+            padding: 10px; text-align: center;
+            background: rgba(212, 175, 55, 0.05);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            font-size: 0.75rem; color: var(--gold);
+            letter-spacing: 1px; font-family: 'Montserrat';
+        }
+
+        .main-content { flex: 1; overflow-y: auto; padding: 10px 20px 180px 20px; display: flex; justify-content: center; }
+        .menu-grid { width: 100%; max-width: 1100px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
+
+        .card {
+            position: relative; aspect-ratio: 4 / 5; border-radius: 10px; overflow: hidden; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.05); background: var(--fume-mirror);
+            transition: 0.4s; opacity: 0; animation: fadeUp 0.6s forwards;
+        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .card-img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5); transition: 0.6s; }
+        .card-overlay { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,1) 0%, transparent 60%); display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 15px; text-align: center; }
+        .card h3 { font-family: 'Cinzel', serif; font-size: 0.85rem; color: #fff; margin: 0; }
+
+        /* Tavsiye Rozeti */
+        .recom-badge {
+            position: absolute; top: 10px; left: 10px;
+            background: var(--gold); color: #000;
+            font-size: 0.6rem; padding: 3px 8px; font-weight: bold;
+            border-radius: 4px; z-index: 5; display: none;
+        }
+
+        .card.active { border: 1.5px solid var(--gold); box-shadow: 0 0 30px var(--gold-glow); }
+        .card.active .card-img { filter: brightness(1); transform: scale(1.05); }
+
+        .footer-bar { position: fixed; bottom: 0; left: 0; width: 100%; padding: 25px; background: linear-gradient(to top, #000 80%, transparent); display: flex; justify-content: center; pointer-events: none; z-index: 20; flex-direction: column; align-items: center; gap: 12px; }
+        .action-btn { background: linear-gradient(45deg, #b88a44, #f3e5ab, #b88a44); background-size: 200%; color: #000; font-family: 'Montserrat', sans-serif; font-weight: 800; padding: 16px 50px; border-radius: 40px; border: none; font-size: 1rem; cursor: pointer; pointer-events: auto; transform: translateY(150px); transition: 0.5s; opacity: 0; letter-spacing: 2px; }
+        .action-btn.visible { transform: translateY(0); opacity: 1; }
         
-        .action-btn:active {
-            transform: scale(0.96);
-        }
+        .ai-main-btn { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(212, 175, 55, 0.4); color: var(--gold); font-family: 'Cinzel', serif; padding: 12px 30px; border-radius: 30px; font-size: 0.85rem; cursor: pointer; pointer-events: auto; display: flex; align-items: center; gap: 10px; letter-spacing: 2px; }
 
-        /* Modal silindi, sadece full screen scripti için bu gerekli */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        /* AI MODAL */
+        #aiModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.98); z-index: 100; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 25px; box-sizing: border-box; backdrop-filter: blur(20px); }
+        .ai-menu-box { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 500px; }
+        .ai-option-btn { background: rgba(255,255,255,0.02); border: 1px solid #222; color: #eee; padding: 20px 10px; border-radius: 12px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; font-family: 'Montserrat'; }
+        .ai-option-btn strong { font-family: 'Cinzel'; color: var(--gold); }
+        .ai-response-box { background: #000; border: 1px solid var(--gold); padding: 35px; border-radius: 20px; max-width: 500px; width: 100%; text-align: center; }
+        .spinner { width: 50px; height: 50px; border: 3px solid rgba(212, 175, 55, 0.1); border-top: 3px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     </style>
 </head>
 <body>
 
-    <header onclick="fullScreen()">
-        <h1>L'YSF</h1>
-        <div class="subtitle">Life Center</div>
-    </header>
-
-    <div class="menu-container">
-        <div class="menu-grid" id="menuGrid">
-            <!-- JS ile doldurulacak -->
+    <!-- VIP Karşılama ve Tarama Ekranı -->
+    <div id="welcomeScreen">
+        <div class="dna-box">
+            <h2 style="font-family: 'Cinzel'; color: var(--gold); letter-spacing: 5px;">L'YSF DIGITAL DNA</h2>
+            <p style="color: #666; font-size: 0.8rem; margin-bottom: 40px;">Lütfen Doğum Tarihinizi Giriniz</p>
+            <input type="date" id="birthDate" class="dna-input">
+            
+            <div id="scanner" class="fingerprint-scanner" onmousedown="startScan()" onmouseup="stopScan()" ontouchstart="startScan()" ontouchend="stopScan()">
+                <div class="scan-line"></div>
+                <div class="fingerprint-icon">✋</div>
+            </div>
+            
+            <p id="scanStatus" style="color: #444; font-size: 0.7rem; letter-spacing: 2px; margin-top: 20px;">KİMLİK DOĞRULAMA İÇİN BASILI TUTUN</p>
         </div>
     </div>
 
+    <!-- Kişiselleştirilmiş Bilgi Şeridi -->
+    <div id="personalAura">DNA Doğrulandı. Bugünkü Frekansınız: %98 Altın Oran.</div>
+
+    <header onclick="fullScreen()">
+        <h1>L'YSF</h1>
+        <div class="subtitle">Life Center</div>
+        <div class="service-nav">
+            <div class="nav-link active">Tea Ritual</div>
+            <div class="nav-link" onclick="openAIMenu()">Center Services</div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="menu-grid" id="menuGrid"></div>
+    </div>
+
     <div class="footer-bar">
-        <!-- Direkt sendOrder fonksiyonuna bağlanıldı -->
-        <button id="orderBtn" class="action-btn" onclick="sendOrder()">SİPARİŞİ TAMAMLA</button>
+        <button class="ai-main-btn" onclick="openAIMenu()">
+            <span>✨</span> L'YSF Asistan
+        </button>
+        <button id="orderBtn" class="action-btn" onclick="sendOrder()">Siparişi Tamamla</button>
+    </div>
+
+    <!-- AI MODAL -->
+    <div id="aiModal">
+        <div id="aiMenu" class="ai-menu-box">
+            <button class="ai-option-btn" style="grid-column: span 2; border: 1.5px solid var(--gold);" onclick="showComplaintInput()">
+                <span>🧘</span> 
+                <strong>Smart Wellness</strong>
+                <small style="opacity:0.6">DNA verilerinize göre analiz</small>
+            </button>
+            <button class="ai-option-btn" onclick="askAI('skin')"><span>✨</span><strong>Skin Secret</strong></button>
+            <button class="ai-option-btn" onclick="askAI('diet')"><span>🥗</span><strong>Diet Guide</strong></button>
+            <button onclick="closeAI()" style="grid-column: span 2; background: none; border: none; color: #555; padding: 15px; text-decoration: underline;">MENÜYE DÖN</button>
+        </div>
+        <div id="aiInputArea" style="display:none; width: 100%; max-width: 400px; text-align: center;">
+            <h3 style="color:var(--gold); font-family:'Cinzel';">Nasıl Hissediyorsunuz?</h3>
+            <input type="text" id="userComplaint" class="ai-input" placeholder="DNA verilerinize eklemek istediğiniz not...">
+            <button class="ai-main-btn" style="width: 100%; justify-content: center; background: var(--gold); color: #000;" onclick="askAI('wellness_journey')">ANALİZE BAŞLA</button>
+            <button onclick="resetAI()" style="background: none; border: none; color: #555; margin-top: 25px;">GERİ</button>
+        </div>
+        <div id="aiLoading" style="display:none; flex-direction:column; align-items:center;">
+            <div class="spinner"></div>
+            <p style="color:var(--gold); margin-top: 20px; font-family:'Cinzel';">DNA ANALİZ EDİLİYOR...</p>
+        </div>
+        <div id="aiContent" class="ai-response-box" style="display:none;">
+            <h3 id="aiTitle" style="color:var(--gold); font-family:'Cinzel';">L'YSF TAVSİYESİ</h3>
+            <div id="aiText" style="font-style: italic; line-height: 1.8; color: #ccc;"></div>
+            <button class="ai-main-btn" style="margin: 30px auto 0;" onclick="resetAI()">TEŞEKKÜRLER</button>
+        </div>
     </div>
 
     <script>
-        // ÜRÜNLER LİSTESİ
+        const TELEGRAM_BOT_TOKEN = "BURAYA_TOKENI_YAPISTIR"; 
+        const TELEGRAM_CHAT_ID = "BURAYA_ID_YAPISTIR";       
+        const GEMINI_API_KEY = ""; 
+
         const products = [
-            { name: "Hatmigül", fallbackIcon: "🌺", img: "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&w=500&q=80" },
-            { name: "Zeytinyaprağı", fallbackIcon: "🌿", img: "https://images.unsplash.com/photo-1563911302283-d2bc129e7c1f?auto=format&fit=crop&w=500&q=80" },
-            { name: "Hibiskus", fallbackIcon: "🍷", img: "https://images.unsplash.com/photo-1596711623957-c8d76bb3d26b?auto=format&fit=crop&w=500&q=80" },
-            { name: "Melisa", fallbackIcon: "🌱", img: "https://images.unsplash.com/photo-1623910959081-36b0cb682df6?auto=format&fit=crop&w=500&q=80" },
-            { name: "Türk Kahvesi", fallbackIcon: "☕", img: "https://images.unsplash.com/photo-1565553066606-f64eb37a2444?auto=format&fit=crop&w=500&q=80" },
-            { name: "Adaçayı", fallbackIcon: "🍵", img: "https://images.unsplash.com/photo-1576092768241-dec231847233?auto=format&fit=crop&w=500&q=80" },
-            { name: "Papatya", fallbackIcon: "🌼", img: "https://images.unsplash.com/photo-1564858547432-84177d6dc47a?auto=format&fit=crop&w=500&q=80" },
-            { name: "Lavanta", fallbackIcon: "💜", img: "https://images.unsplash.com/photo-1473216892314-fb760f339f4d?auto=format&fit=crop&w=500&q=80" },
-            { name: "Su", fallbackIcon: "💧", img: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=500&q=80" }
+            { name: "Hatmigül", id: "tea1", img: "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?auto=format&fit=crop&w=500&q=80" },
+            { name: "Zeytinyaprağı", id: "tea2", img: "https://images.unsplash.com/photo-1563911302283-d2bc129e7c1f?auto=format&fit=crop&w=500&q=80" },
+            { name: "Hibiskus", id: "tea3", img: "https://images.unsplash.com/photo-1596711623957-c8d76bb3d26b?auto=format&fit=crop&w=500&q=80" },
+            { name: "Melisa", id: "tea4", img: "https://images.unsplash.com/photo-1623910959081-36b0cb682df6?auto=format&fit=crop&w=500&q=80" },
+            { name: "Türk Kahvesi", id: "tea5", img: "https://images.unsplash.com/photo-1565553066606-f64eb37a2444?auto=format&fit=crop&w=500&q=80" },
+            { name: "Adaçayı", id: "tea6", img: "https://images.unsplash.com/photo-1576092768241-dec231847233?auto=format&fit=crop&w=500&q=80" },
+            { name: "Papatya", id: "tea7", img: "https://images.unsplash.com/photo-1564858547432-84177d6dc47a?auto=format&fit=crop&w=500&q=80" },
+            { name: "Lavanta", id: "tea8", img: "https://images.unsplash.com/photo-1473216892314-fb760f339f4d?auto=format&fit=crop&w=500&q=80" },
+            { name: "Su", id: "tea9", img: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=500&q=80" }
         ];
 
+        let scanTimer;
         let selectedItems = [];
-        const grid = document.getElementById('menuGrid');
-        const orderBtn = document.getElementById('orderBtn');
 
-        // Menüyü oluştur
-        products.forEach((product, index) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.style.animationDelay = `${index * 0.05}s`;
+        // Tarama İşlemi
+        function startScan() {
+            const date = document.getElementById('birthDate').value;
+            if(!date) { alert("Lütfen önce doğum tarihinizi seçiniz."); return; }
             
-            card.innerHTML = `
-                <div class="card-img-container">
-                    <div class="fallback-view">${product.fallbackIcon}</div>
-                    <img src="${product.img}" class="card-img" alt="${product.name}" onerror="this.style.display='none'">
-                </div>
-                <div class="check-icon">✓</div>
-                <div class="card-overlay">
-                    <h3>${product.name}</h3>
-                </div>
-            `;
+            document.getElementById('scanner').classList.add('scanner-active');
+            document.getElementById('scanStatus').innerText = "DNA ANALİZİ YAPILIYOR...";
+            document.getElementById('scanStatus').style.color = "var(--gold)";
 
-            card.onclick = () => toggleSelect(card, product.name);
-            grid.appendChild(card);
-        });
-
-        function toggleSelect(card, name) {
-            if (selectedItems.includes(name)) {
-                selectedItems = selectedItems.filter(i => i !== name);
-                card.classList.remove('active');
-            } else {
-                selectedItems.push(name);
-                card.classList.add('active');
-            }
-            updateButton();
+            scanTimer = setTimeout(() => {
+                document.getElementById('welcomeScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('welcomeScreen').style.display = 'none';
+                    document.getElementById('personalAura').style.display = 'block';
+                    applyPersonalization(date);
+                }, 1000);
+            }, 3000);
         }
 
-        function updateButton() {
-            if (selectedItems.length > 0) {
-                orderBtn.classList.add('visible');
-                orderBtn.innerText = `SİPARİŞİ TAMAMLA (${selectedItems.length})`;
-            } else {
-                orderBtn.classList.remove('visible');
-            }
+        function stopScan() {
+            clearTimeout(scanTimer);
+            document.getElementById('scanner').classList.remove('scanner-active');
+            document.getElementById('scanStatus').innerText = "DOĞRULAMA YARIDA KESİLDİ";
+            document.getElementById('scanStatus').style.color = "#444";
         }
 
-        // --- DİREKT WHATSAPP FONKSİYONU ---
-        function sendOrder() {
-            // L'YSF Life Center Numarası (Sabitlendi)
-            const targetPhone = "905515049902"; 
-
-            let msg = "*L'YSF LIFE CENTER - YENİ SİPARİŞ*%0A%0A";
+        function applyPersonalization(date) {
+            const birthMonth = new Date(date).getMonth();
+            const personalAuraText = document.getElementById('personalAura');
+            const menuGrid = document.getElementById('menuGrid');
             
-            // Tarih ve Saat
-            const d = new Date();
-            msg += `🕒 ${d.getHours()}:${d.getMinutes() < 10 ? '0'+d.getMinutes() : d.getMinutes()} %0A%0A`;
+            // Basit bir astro-aura mantığı
+            const auras = ["Sakinleştirici Mavi", "Canlandırıcı Altın", "Saf Beyaz", "Derin Füme", "Yenileyici Yeşil"];
+            const currentAura = auras[birthMonth % auras.length];
+            personalAuraText.innerText = `DNA Doğrulandı. Bugünkü Frekansınız: %98. Enerji Renginiz: ${currentAura}`;
 
-            // Seçilen Ürünler
-            selectedItems.forEach(item => {
-                msg += `▪ ${item}%0A`;
+            // Menü kartlarını oluştur ve bir tanesini tavsiye et
+            menuGrid.innerHTML = "";
+            products.forEach((product, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.id = product.id;
+                card.style.animationDelay = `${index * 0.04}s`;
+                
+                // Doğum ayına göre bir ürüne "VIP Tavsiye" ekle
+                const isRecommended = (index === (birthMonth % products.length));
+                
+                card.innerHTML = `
+                    <div class="recom-badge" style="display: ${isRecommended ? 'block' : 'none'}">SİZİN İÇİN SEÇİLDİ</div>
+                    <img src="${product.img}" class="card-img" onerror="this.style.display='none'">
+                    <div class="card-overlay"><h3>${product.name}</h3></div>
+                `;
+                
+                card.onclick = () => {
+                    if (selectedItems.includes(product.name)) {
+                        selectedItems = selectedItems.filter(i => i !== product.name);
+                        card.classList.remove('active');
+                    } else {
+                        selectedItems.push(product.name);
+                        card.classList.add('active');
+                    }
+                    const orderBtn = document.getElementById('orderBtn');
+                    orderBtn.classList.toggle('visible', selectedItems.length > 0);
+                    if(selectedItems.length > 0) orderBtn.innerText = `SİPARİŞİ TAMAMLA (${selectedItems.length})`;
+                };
+                menuGrid.appendChild(card);
             });
-            msg += "%0A----------------%0A(Müşteri Tableti)";
-            
-            // Direkt Linki Aç
-            window.location.href = `https://wa.me/${targetPhone}?text=${msg}`;
-            
-            // Seçimleri Temizle
-            setTimeout(() => location.reload(), 1500);
         }
 
-        function fullScreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(e => console.log(e));
+        // Diğer Fonksiyonlar (AI & Sipariş)
+        function openAIMenu() { document.getElementById('aiModal').style.display = 'flex'; resetAI(); }
+        function closeAI() { document.getElementById('aiModal').style.display = 'none'; }
+        function resetAI() {
+            ['aiMenu', 'aiInputArea', 'aiLoading', 'aiContent'].forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById('aiMenu').style.display = 'grid';
+        }
+        function showComplaintInput() { document.getElementById('aiMenu').style.display = 'none'; document.getElementById('aiInputArea').style.display = 'block'; }
+
+        async function askAI(mode) {
+            const loading = document.getElementById('aiLoading');
+            const content = document.getElementById('aiContent');
+            const text = document.getElementById('aiText');
+            const bDate = document.getElementById('birthDate').value;
+
+            document.getElementById('aiInputArea').style.display = 'none';
+            document.getElementById('aiMenu').style.display = 'none';
+            loading.style.display = 'flex';
+
+            let prompt = `Müşterinin doğum tarihi: ${bDate}. L'YSF Wellness asistanı olarak, `;
+            if(mode === 'wellness_journey') prompt += `müşterinin şu notuna göre (${document.getElementById('userComplaint').value}) DNA yapısına uygun çay ve cilt bakımı önerisi yap.`;
+            else if(mode === 'skin') prompt += `bu yaş ve DNA profiline uygun cilt yenileme sırrımızı anlat.`;
+            else prompt += `beslenme ritüeli önerisi ver.`;
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
+                const data = await response.json();
+                text.innerText = data.candidates[0].content.parts[0].text.replace(/\*/g, '');
+                loading.style.display = 'none';
+                content.style.display = 'block';
+            } catch (e) {
+                loading.style.display = 'none';
+                content.style.display = 'block';
+                text.innerText = "L'YSF Wellness sistemi şu an derin analizde. Kişisel tavsiyeniz hazırlanıyor.";
             }
         }
+
+        async function sendOrder() {
+            const status = document.getElementById('statusModal');
+            status.style.display = 'flex';
+            const msg = `🔴 *YENİ VIP SİPARİŞ*\n\n📋 *Ürünler:* ${selectedItems.join(", ")}\n🎂 *D.Tarihi:* ${document.getElementById('birthDate').value}`;
+            try {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' })
+                });
+                document.getElementById('loadingView').style.display = 'none';
+                document.getElementById('successView').style.display = 'block';
+                setTimeout(() => location.reload(), 3000);
+            } catch (e) { status.style.display = 'none'; }
+        }
+
+        function fullScreen() { document.documentElement.requestFullscreen().catch(e => {}); }
     </script>
 </body>
 </html>
